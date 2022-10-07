@@ -6,9 +6,38 @@ sources:
     schema: public
     tables:
       - name: addresses
+        description: contains a list of all unique addresses
+        columns:
+          - name: address_id
+            description: primary key
       - name: events
+        description: contains a list of all unique events
+        columns:
+          - name: event_id
+            description: primary key
       - name: orders
+        description: contains a list of all orders
+        columns:
+          - name: order_id
+            description: primary key
       - name: order_items
+        description: contains a list of all orders and their products
+        columns:
+          - name: order_id
+            description: primary key with product_id
+          - name: product_id
+            description: primary key with order_id
       - name: products
+        description: contains a list of products
+        columns:
+          - name: product_id
+            description: primary key
       - name: promos
-      - name: users 
+        description: contains a list of all promotions
+        columns:
+          - name: promo_id
+            description: primary key
+      - name: users
+        description: contains a unique list of users
+        columns:
+          - name: user_id
