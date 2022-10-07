@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: stg_addresses
+    columns:
+      - name: address_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_events
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_order_items
+    tests:
+      - unique:
+          column_name: "(order_id || '-' || product_id)"
+  - name: stg_orders
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_products
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_promos
+    columns:
+      - name: promo_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_user
+    columns:
+      - name: user_id
+        tests:
+          - unique
+          - not_null
