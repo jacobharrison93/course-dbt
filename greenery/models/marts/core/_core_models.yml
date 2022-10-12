@@ -1,0 +1,18 @@
+version : 2
+
+models:
+  - name: fact_orders
+    description: list of all the orders and their related fact_orders
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: order_total
+        description: contains the sum of the shipping cost and order cost
+        tests:
+          - not_null
+      - name: status
+        description: contains the 3 main statuses of preparing, shipped, and delivered
+        tests:
+          - not_null
