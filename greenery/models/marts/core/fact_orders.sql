@@ -18,6 +18,12 @@ promos as (
 users as (
 
     select * from {{ref('stg_user')}}
+),
+
+order_items_agg as (
+
+    select * from {{ref('int_order_items_agg')}}
+
 )
 
 select
@@ -40,6 +46,8 @@ select
     orders.estimated_delivery_at,
     orders.delivered_at,
     orders.status,
+    order_items_agg.number_of_products,
+    order_items_agg.total_quantity,
     case
         when orders.status = 'delivered' then datediff(hour,orders.created_at,orders.delivered_at)
     end as delivery_time_hours
@@ -50,3 +58,4 @@ from orders
 left join addresses on orders.address_id = addresses.address_id
 left join promos on orders.promo_id = promos.promo_id
 left join users on orders.user_id = users.user_id
+left join order_items_agg on orders.order_id = order_items_agg.order_id
