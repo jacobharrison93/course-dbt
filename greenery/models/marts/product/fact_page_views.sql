@@ -1,39 +1,28 @@
 {{config(materialized = 'table')}}
 
-with users as (
+with sessions as (
 
+    select * from {{ref('int_session_agg')}}
+),
+
+users as (
     select * from {{ref('stg_user')}}
-),
-
-addresses as (
-    select * from {{ref('stg_addresses')}}
-
-),
-
-user_orders as (
-    select * from {{ref('int_user_orders')}}
 )
 
+
 select
-    users.user_id,
+    sessions.session_id,
+    sessions.user_id,
     users.first_name,
     users.last_name,
-    users.email,
-    users.phone_number,
-    users.created_at,
-    users.updated_at,
-    addresses.address,
-    addresses.zipcode,
-    addresses.state,
-    addresses.country,
-    user_orders.num_of_orders,
-    user_orders.num_of_promo_orders,
-    user_orders.total_order_spend,
-    user_orders.total_shipping_spend,
-    user_orders.total_spend,
-    user_orders.oldest_order,
-    user_orders.newest_order
+    num_of_page_views,
+    num_of_add_to_cart,
+    num_of_checkouts,
+    num_of_packaged_shipped,
+    num_of_events,
+    session_start_time,
+    session_end_time,
+    total_session_time
         
-from users
-left join addresses on users.address_id = addresses.address_id
-left join user_orders on users.user_id = user_orders.user_id
+from sessions
+left join users on sessions.user_id = users.user_id
