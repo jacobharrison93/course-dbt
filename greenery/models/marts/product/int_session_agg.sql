@@ -24,4 +24,4 @@ select
     datediff(minutes,session_start_time,session_end_time) as total_session_time
         
 from sessions
-group by 1,2
+{{dbt_utils.group_by(n=2)}}
