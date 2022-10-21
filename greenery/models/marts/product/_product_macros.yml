@@ -1,0 +1,11 @@
+version: 2
+
+macros:
+  - name: dbt-utils.dbt_utils.get_column_values
+    description: Macro that takes a table name and then a column and converts the distinct values into a list. Can be used later in a for loop
+    arguments:
+      - name: table
+        type: string
+        description: takes the value of a table generally use the ref function here
+      - name: column
+        description: takes the name of the column formatted with ' ' around the name
