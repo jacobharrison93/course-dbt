@@ -13,54 +13,15 @@
               from dev_db.dbt_jacobharrison93.orders_snapshot
               where cast(dbt_updated_at as date) >= '2022-10-26'
           ```
-  a. Overall Conversion Rate: __62.45%__    
-			
-        ```sql
-           select
-             count(distinct session_id) as num_of_sessions,
-             count(distinct (case when event_type = 'checkout' then session_id end)) as converted_sessions,
-             converted_sessions/num_of_sessions as conversion_rate
-           from dev_db.dbt_jacobharrison93.fact_product_views;
-        ```
-        
-   b. Conversion Rate by Product __(Top 5 Listed Below)__
-   
-   
-   |PRODUCT_NAME|NUM_OF_SESSIONS|CONVERTED_SESSIONS|CONVERSION_RATE|
-   |---------------------|------------------|---------------------|----------------|
-   | String of pearls	| 64	| 39 |	0.609375 |
-   | Arrow Head	| 63	| 35	| 0.555556 |
-   | Cactus	|55	| 30 |	0.545455 |
-   | ZZ Plant	| 63	| 34 |	0.539683 |
-   | Bamboo	| 67	| 36 |	0.537313 |
-   
 
-   ```sql
-   
-	     select
-	        product_name,
-	        count(distinct session_id) as num_of_sessions,
-	        count(distinct (case when event_type = 'checkout' then session_id end)) as converted_sessions,
-	        converted_sessions/num_of_sessions as conversion_rate
-	     from dev_db.dbt_jacobharrison93.fact_product_views
-	     group by 1
-	     order by 4 desc
-       
-   ```
+2. Product Funnel
+     - ```sql
+     	select * from DEV_DB.DBT_JACOBHARRISON93.dim_product_funnel;
+     	```
 
-2. Macro
-     - Macro is under the int_session_agg.sql file for looping through the event_types.
-
-3. Hooks
-     - Post Hook for granting permission is in the dbt_project.yml file under the 
-
-4. dbt Packages
-     - dbt-utils used example above for int_session_agg.sgl
-     - test: used combination_of_columns test in _product_models.yml file for int_checkout_producs
-      
-	
- 6.  DAG for my models
-	![DAG](https://user-images.githubusercontent.com/111754475/197208317-cf8487e1-7a29-4399-bdeb-b0d617e03596.PNG)
+3. Reflection
+     a. dbt next steps: My ogranization is using dbt today. A few items I think could help would be to use int tables to help cut down on some of the CTE's. We do not use macros a ton but I am sure there are use cases where it would make sense.
+     b. Setting up for production: I would make sure to have test throughly setup to test for all use cases. I would also use something like datadiff to help ensure we are not changing tables without expecting it. I would then setup a full run at least once a day with notifications of failure coming to me or others on the team to prevent issues from leaking to end users.
 
 
     
