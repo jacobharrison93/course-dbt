@@ -1,0 +1,14 @@
+version: 2
+
+exposures:
+
+  - name: product_funnel
+    type: dashboard
+    description: contains the product funnel information for page view > add to cart > checkout
+
+    depends_on:
+      - ref('dim_product_funnel')
+
+    owner:
+      name: jacob harrison
+      email: jacob.harrison@craneww.com
